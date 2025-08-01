@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Can Bolsonaro Walk Freely?</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f0f0f0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    #status {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    #time, #countdown {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Can Bolsonaro Walk Freely?</h1>
+  <div id="status">Checking...</div>
+  <div id="time"></div>
+  <div id="countdown"></div>
+
+  <script>
+    function updatePage() {
+      const now = new Date();
+      const brasilia = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+      const hour = brasilia.getHours();
+      const minutes = brasilia.getMinutes();
+      const seconds = brasilia.getSeconds();
+
+      const status = document.getElementById("status");
+      const timeDiv = document.getElementById("time");
+      const countdownDiv = document.getElementById("countdown");
+
+      timeDiv.textContent = `Brasília time: ${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+      let nextChange = new Date(brasilia);
+      if (hour >= 7 && hour < 19) {
+        status.textContent = "✅ Yes, he can walk freely.";
+        status.style.color = "green";
+        nextChange.setHours(19, 0, 0, 0); // Next change: 7 PM
+      } else {
+        status.textContent = "⛔ No, he cannot walk freely.";
+        status.style.color = "red";
+        if (hour >= 19) {
+          nextChange.setDate(nextChange.getDate() + 1); // Go to tomorrow
+        }
+        nextChange.setHours(7, 0, 0, 0); // Next change: 7 AM
+      }
+
+      const diffMs = nextChange - brasilia;
+      const diffSec = Math.floor(diffMs / 1000);
+      const h = Math.floor(diffSec / 3600);
+      const m = Math.floor((diffSec % 3600) / 60);
+      const s = diffSec % 60;
+
+      countdownDiv.textContent = `Next change in: ${h}h ${m}m ${s}s`;
+    }
+
+    updatePage();
+    setInterval(updatePage, 1000);
+  </script>
+</body>
+</html>
