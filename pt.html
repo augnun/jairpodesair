@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bolsonaro pode andar livremente?</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f0f0f0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    #status {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    #time, #countdown {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bolsonaro pode andar livremente?</h1>
+  <div id="status">Verificando...</div>
+  <div id="time"></div>
+  <div id="countdown"></div>
+
+  <script>
+    function atualizarPagina() {
+      const agora = new Date();
+      const brasilia = new Date(agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }));
+      const hora = brasilia.getHours();
+      const minutos = brasilia.getMinutes();
+      const segundos = brasilia.getSeconds();
+
+      const status = document.getElementById("status");
+      const timeDiv = document.getElementById("time");
+      const countdownDiv = document.getElementById("countdown");
+
+      timeDiv.textContent = `Hora em Brasília: ${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+      let proximaMudanca = new Date(brasilia);
+      if (hora >= 7 && hora < 19) {
+        status.textContent = "✅ Sim, ele pode andar livremente.";
+        status.style.color = "green";
+        proximaMudanca.setHours(19, 0, 0, 0); // Próxima mudança: 19h
+      } else {
+        status.textContent = "⛔ Não, ele não pode andar livremente.";
+        status.style.color = "red";
+        if (hora >= 19) {
+          proximaMudanca.setDate(proximaMudanca.getDate() + 1); // Amanhã
+        }
+        proximaMudanca.setHours(7, 0, 0, 0); // Próxima mudança: 7h
+      }
+
+      const diffMs = proximaMudanca - brasilia;
+      const diffSec = Math.floor(diffMs / 1000);
+      const h = Math.floor(diffSec / 3600);
+      const m = Math.floor((diffSec % 3600) / 60);
+      const s = diffSec % 60;
+
+      countdownDiv.textContent = `Próxima mudança em: ${h}h ${m}m ${s}s`;
+    }
+
+    atualizarPagina();
+    setInterval(atualizarPagina, 1000);
+  </script>
+</body>
+</html>
