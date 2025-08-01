@@ -1,0 +1,12 @@
+<script>
+  function isPortuguese() {
+    const lang = navigator.language || navigator.userLanguage;
+    return lang.toLowerCase().startsWith("pt");
+  }
+
+  if (isPortuguese()) {
+    window.location.href = "br.html";  
+  } else {
+    window.location.href = "en.html";  
+  }
+</script>
