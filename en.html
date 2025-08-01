@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <title>Can Jair Walk Freely?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.png" type="image/png">
   <style>
     body {
       font-family: sans-serif;
@@ -36,6 +37,13 @@
   <div id="time"></div>
   <div id="countdown"></div>
 
+  <footer>
+    <a href="https://github.com/augnun/jairpodesair" target="_blank">
+      <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" alt="GitHub">
+      GitHub
+    </a>
+  </footer>
+
   <script>
     function updatePage() {
       const now = new Date();
@@ -54,14 +62,14 @@
       if (hour >= 7 && hour < 19) {
         status.textContent = "✅ Yes, he can walk freely.";
         status.style.color = "green";
-        nextChange.setHours(19, 0, 0, 0); // Next change: 7 PM
+        nextChange.setHours(19, 0, 0, 0);
       } else {
         status.textContent = "⛔ No, he cannot walk freely.";
         status.style.color = "red";
         if (hour >= 19) {
-          nextChange.setDate(nextChange.getDate() + 1); // Go to tomorrow
+          nextChange.setDate(nextChange.getDate() + 1);
         }
-        nextChange.setHours(7, 0, 0, 0); // Next change: 7 AM
+        nextChange.setHours(7, 0, 0, 0);
       }
 
       const diffMs = nextChange - brasilia;
