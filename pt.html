@@ -4,7 +4,22 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <title>Jair pode andar livremente?</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <style>
+    :root {
+      --bg: #f0f0f0;
+      --text: #111;
+      --secondary: #555;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111;
+        --text: #f0f0f0;
+        --secondary: #aaa;
+      }
+    }
+
     body {
       font-family: sans-serif;
       display: flex;
@@ -12,21 +27,48 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background: #f0f0f0;
+      background: var(--bg);
+      color: var(--text);
       text-align: center;
+      margin: 0;
     }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
+
     #status {
       font-size: 2.5rem;
       font-weight: bold;
     }
+
     #time, #countdown {
       margin-top: 1rem;
       font-size: 1rem;
-      color: #555;
+      color: var(--secondary);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      margin: 0 0.5rem;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      vertical-align: middle;
+      width: 18px;
+      height: 18px;
     }
   </style>
 </head>
@@ -36,6 +78,12 @@
   <div id="time"></div>
   <div id="countdown"></div>
 
+  <footer>
+    <a href="https://github.com/augnun/jairpodesair" target="_blank">
+      <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" alt="GitHub">
+      GitHub
+    </a>
+  </footer>
   <script>
     function atualizarPagina() {
       const agora = new Date();
