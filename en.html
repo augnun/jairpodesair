@@ -5,7 +5,25 @@
   <title>Can Jair Walk Freely?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="favicon.png" type="image/png">
+</head>
+
+
+
   <style>
+    :root {
+      --bg: #f0f0f0;
+      --text: #111;
+      --secondary: #555;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111;
+        --text: #f0f0f0;
+        --secondary: #aaa;
+      }
+    }
+
     body {
       font-family: sans-serif;
       display: flex;
@@ -13,24 +31,51 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background: #f0f0f0;
+      background: var(--bg);
+      color: var(--text);
       text-align: center;
+      margin: 0;
     }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
+
     #status {
       font-size: 2.5rem;
       font-weight: bold;
     }
+
     #time, #countdown {
       margin-top: 1rem;
       font-size: 1rem;
-      color: #555;
+      color: var(--secondary);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      margin: 0 0.5rem;
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      vertical-align: middle;
+      width: 18px;
+      height: 18px;
     }
   </style>
-</head>
+
 <body>
   <h1>Can Jair Walk Freely?</h1>
   <div id="status">Checking...</div>
