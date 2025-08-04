@@ -2,13 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Can Jair Walk Freely?</title>
+  <title>Can Bolsonaro Walk Freely?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="favicon.png" type="image/png">
-</head>
-
-
-
   <style>
     :root {
       --bg: #f0f0f0;
@@ -16,25 +12,24 @@
       --secondary: #555;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111;
-        --text: #f0f0f0;
-        --secondary: #aaa;
-      }
+    [data-theme="dark"] {
+      --bg: #111;
+      --text: #f0f0f0;
+      --secondary: #aaa;
     }
 
     body {
       font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background: var(--bg);
-      color: var(--text);
       text-align: center;
       margin: 0;
+      transition: background 0.3s, color 0.3s;
     }
 
     h1 {
@@ -45,12 +40,7 @@
     #status {
       font-size: 2.5rem;
       font-weight: bold;
-    }
-
-    #time, #countdown {
-      margin-top: 1rem;
-      font-size: 1rem;
-      color: var(--secondary);
+      color: red;
     }
 
     footer {
@@ -69,65 +59,64 @@
       text-decoration: underline;
     }
 
+    #theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--text);
+    }
+
     .icon {
       vertical-align: middle;
       width: 18px;
       height: 18px;
     }
   </style>
-
+</head>
 <body>
-  <h1>Can Jair Walk Freely?</h1>
-  <div id="status">Checking...</div>
-  <div id="time"></div>
-  <div id="countdown"></div>
+  <button id="theme-toggle" title="Toggle dark/light mode">🌓</button>
+  <h1>Can Bolsonaro Walk Freely?</h1>
+  <div id="status">⛔ No, he is currently under house arrest.</div>
 
   <footer>
-    <a href="https://github.com/augnun/jairpodesair" target="_blank">
-      <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" alt="GitHub">
-      GitHub
+    <a href="https://github.com/your-username/bolsonaro-tracker" target="_blank">
+      <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" alt="GitHub"> GitHub
+    </a>
+    <a href="https://gitlab.com/your-username/bolsonaro-tracker" target="_blank">
+      <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/gitlab.svg" alt="GitLab"> GitLab
     </a>
   </footer>
 
   <script>
-    function updatePage() {
-      const now = new Date();
-      const brasilia = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
-      const hour = brasilia.getHours();
-      const minutes = brasilia.getMinutes();
-      const seconds = brasilia.getSeconds();
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
 
-      const status = document.getElementById("status");
-      const timeDiv = document.getElementById("time");
-      const countdownDiv = document.getElementById("countdown");
-
-      timeDiv.textContent = `Brasília time: ${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-
-      let nextChange = new Date(brasilia);
-      if (hour >= 7 && hour < 19) {
-        status.textContent = "✅ Yes, he can walk freely.";
-        status.style.color = "green";
-        nextChange.setHours(19, 0, 0, 0);
-      } else {
-        status.textContent = "⛔ No, he cannot walk freely.";
-        status.style.color = "red";
-        if (hour >= 19) {
-          nextChange.setDate(nextChange.getDate() + 1);
-        }
-        nextChange.setHours(7, 0, 0, 0);
-      }
-
-      const diffMs = nextChange - brasilia;
-      const diffSec = Math.floor(diffMs / 1000);
-      const h = Math.floor(diffSec / 3600);
-      const m = Math.floor((diffSec % 3600) / 60);
-      const s = diffSec % 60;
-
-      countdownDiv.textContent = `Next change in: ${h}h ${m}m ${s}s`;
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
     }
 
-    updatePage();
-    setInterval(updatePage, 1000);
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        applyTheme(saved);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    initTheme();
   </script>
 </body>
 </html>
